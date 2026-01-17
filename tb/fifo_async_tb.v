@@ -430,14 +430,16 @@ module fifo_async_tb;
             end
 
             // Attempt write when full
-            write_single(32'hBADBAD);
-            wait_wr_cycles(1);
-
-            // Check overflow
+            @(posedge wr_clk);
+            wr_en = 1;
+            wr_data = 32'hBADBAD;
+            @(posedge wr_clk);
+            // Check overflow on this cycle (before wr_en goes low)
             if (overflow !== 1'b1) begin
                 $display("  ERROR: overflow should be set");
                 pass = 0;
             end
+            wr_en = 0;
 
             report_test("Overflow Detection", pass);
         end
@@ -460,14 +462,15 @@ module fifo_async_tb;
             end
 
             // Attempt read when empty
-            read_single();
-            wait_rd_cycles(1);
-
-            // Check underflow
+            @(posedge rd_clk);
+            rd_en = 1;
+            @(posedge rd_clk);
+            // Check underflow on this cycle (before rd_en goes low)
             if (underflow !== 1'b1) begin
                 $display("  ERROR: underflow should be set");
                 pass = 0;
             end
+            rd_en = 0;
 
             report_test("Underflow Detection", pass);
         end

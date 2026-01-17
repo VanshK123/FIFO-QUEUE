@@ -2,6 +2,8 @@
 
 A comprehensive digital design project implementing both **Synchronous** and **Asynchronous FIFO** queues in Verilog, with emphasis on Clock Domain Crossing (CDC) techniques, performance analysis, and thorough verification.
 
+### Important Note - This project is currently being built check the TEST_RESULTS_SUMMARY.md to see status
+
 ## Overview
 
 This project demonstrates:

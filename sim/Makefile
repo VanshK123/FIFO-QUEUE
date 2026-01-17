@@ -75,7 +75,7 @@ sync: $(WAVE_DIR) $(LOG_DIR)
 	@echo ""
 	@echo "Running Synchronous FIFO simulation..."
 	@echo "==================================="
-	cd $(WAVE_DIR) && $(VVP) ../../sim/$(SYNC_VVP) | tee ../../$(LOG_DIR)/fifo_sync.log
+	$(VVP) $(SYNC_VVP) | tee $(LOG_DIR)/fifo_sync.log
 	@echo ""
 	@echo "Sync FIFO simulation complete!"
 	@echo "Waveform: $(WAVE_DIR)/fifo_sync.vcd"
@@ -95,7 +95,7 @@ async: $(WAVE_DIR) $(LOG_DIR)
 	@echo ""
 	@echo "Running Asynchronous FIFO simulation..."
 	@echo "==================================="
-	cd $(WAVE_DIR) && $(VVP) ../../sim/$(ASYNC_VVP) | tee ../../$(LOG_DIR)/fifo_async.log
+	$(VVP) $(ASYNC_VVP) | tee $(LOG_DIR)/fifo_async.log
 	@echo ""
 	@echo "Async FIFO simulation complete!"
 	@echo "Waveform: $(WAVE_DIR)/fifo_async.vcd"

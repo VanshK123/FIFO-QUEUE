@@ -1,0 +1,66 @@
+======================================================================
+FIFO PROJECT - PERFORMANCE ANALYSIS REPORT
+======================================================================
+Generated: 2026-01-17 13:39:59
+
+----------------------------------------------------------------------
+SYNCHRONOUS FIFO RESULTS
+----------------------------------------------------------------------
+
+Test Results:
+  [PASS] Reset Test
+  [PASS] Single Write/Read
+  [PASS] Fill FIFO
+  [PASS] Drain FIFO
+  [PASS] Overflow Detection
+  [PASS] Underflow Detection
+  [PASS] Simultaneous R/W
+  [FAIL] Random Operations
+  [PASS] Burst Write/Read
+  [PASS] Performance Test
+
+Summary: 9/10 tests passed (90%)
+
+Performance Metrics:
+  Total Writes:    93
+  Total Reads:     67
+  Peak Occupancy:  2/16 (12%)
+  Throughput:      95.46 MB/s
+
+----------------------------------------------------------------------
+ASYNCHRONOUS FIFO RESULTS
+----------------------------------------------------------------------
+
+Test Results:
+  [PASS] Reset Test
+  [PASS] Basic Write/Read
+  [PASS] Fill FIFO
+  [PASS] Drain FIFO
+  [PASS] Overflow Detection
+  [PASS] Underflow Detection
+  [PASS] Write Clock Faster
+  [FAIL] CDC Stress Test
+  [FAIL] Random Operations
+  [PASS] Performance Test
+
+Summary: 8/10 tests passed (80%)
+
+Performance Metrics:
+  Total Writes:    129
+  Total Reads:     61
+  Throughput:      64.59 MB/s
+
+----------------------------------------------------------------------
+COMPARISON SUMMARY
+----------------------------------------------------------------------
+
+                          Sync FIFO    Async FIFO
+                          ---------    ----------
+  Tests Passed:               9            8
+  Tests Failed:               1            2
+  Total Writes:              93          129
+  Total Reads:               67           61
+
+======================================================================
+OVERALL STATUS: SOME TESTS FAILED
+======================================================================
