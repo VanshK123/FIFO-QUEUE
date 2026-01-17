@@ -1,0 +1,57 @@
+# Personal TODO files
+todo.md
+TODO.md
+*.todo
+
+# Verilog simulation files
+*.vvp
+*.vcd
+*.fst
+*.out
+
+# Log files
+*.log
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# IDE specific files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS specific files
+.DS_Store
+Thumbs.db
+*.bak
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+
+# Results that can be regenerated
+results/waveforms/*.vcd
+results/waveforms/*.fst
+results/logs/*.log
+
+# Keep directory structure but ignore contents
+!results/waveforms/.gitkeep
+!results/logs/.gitkeep
+!results/reports/.gitkeep
