@@ -1,0 +1,54 @@
+[*]
+[*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
+[*] Fri Jan 17 18:20:10 2026
+[*]
+[dumpfile] "/home/vansh/Desktop/Study/Project/FIFO/results/waveforms/fifo_sync.vcd"
+[savefile] "/home/vansh/Desktop/Study/Project/FIFO/sim/wave_sync.gtkw"
+[timestart] 0
+[size] 1920 1080
+[pos] -1 -1
+*-17.000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] fifo_sync_tb.
+[sst_width] 233
+[signals_width] 230
+[sst_expanded] 1
+[sst_vpaned_height] 525
+@28
+fifo_sync_tb.clk
+fifo_sync_tb.rst_n
+@200
+-Write Interface
+@28
+fifo_sync_tb.wr_en
+@22
+fifo_sync_tb.wr_data[31:0]
+@200
+-Read Interface
+@28
+fifo_sync_tb.rd_en
+@22
+fifo_sync_tb.rd_data[31:0]
+@200
+-Status Flags
+@28
+fifo_sync_tb.empty
+fifo_sync_tb.full
+fifo_sync_tb.almost_empty
+fifo_sync_tb.almost_full
+fifo_sync_tb.overflow
+fifo_sync_tb.underflow
+@200
+-FIFO Status
+@22
+fifo_sync_tb.data_count[4:0]
+fifo_sync_tb.peak_count[4:0]
+@200
+-Internal Signals
+@22
+fifo_sync_tb.dut.wr_ptr[4:0]
+fifo_sync_tb.dut.rd_ptr[4:0]
+@28
+fifo_sync_tb.dut.do_write
+fifo_sync_tb.dut.do_read
+[pattern_trace] 1
+[pattern_trace] 0

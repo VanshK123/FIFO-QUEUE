@@ -1,0 +1,64 @@
+[*]
+[*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
+[*] Fri Jan 17 18:20:10 2026
+[*]
+[dumpfile] "/home/vansh/Desktop/Study/Project/FIFO/results/waveforms/fifo_async.vcd"
+[savefile] "/home/vansh/Desktop/Study/Project/FIFO/sim/wave_async.gtkw"
+[timestart] 0
+[size] 1920 1080
+[pos] -1 -1
+*-17.000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] fifo_async_tb.
+[sst_width] 233
+[signals_width] 250
+[sst_expanded] 1
+[sst_vpaned_height] 525
+@28
+fifo_async_tb.wr_clk
+fifo_async_tb.rd_clk
+fifo_async_tb.rst_n
+@200
+-Write Domain
+@28
+fifo_async_tb.wr_en
+@22
+fifo_async_tb.wr_data[31:0]
+@28
+fifo_async_tb.full
+fifo_async_tb.almost_full
+fifo_async_tb.overflow
+@200
+-Read Domain
+@28
+fifo_async_tb.rd_en
+@22
+fifo_async_tb.rd_data[31:0]
+@28
+fifo_async_tb.empty
+fifo_async_tb.almost_empty
+fifo_async_tb.underflow
+@200
+-FIFO Status
+@22
+fifo_async_tb.wr_data_count[4:0]
+fifo_async_tb.rd_data_count[4:0]
+@200
+-Write Pointer (Gray Code)
+@22
+fifo_async_tb.dut.wr_ptr_binary[4:0]
+fifo_async_tb.dut.wr_ptr_gray[4:0]
+@200
+-Read Pointer (Gray Code)
+@22
+fifo_async_tb.dut.rd_ptr_binary[4:0]
+fifo_async_tb.dut.rd_ptr_gray[4:0]
+@200
+-CDC Synchronizers
+@22
+fifo_async_tb.dut.wr_ptr_gray_sync[4:0]
+fifo_async_tb.dut.rd_ptr_gray_sync[4:0]
+@28
+fifo_async_tb.dut.do_write
+fifo_async_tb.dut.do_read
+[pattern_trace] 1
+[pattern_trace] 0
