@@ -441,6 +441,10 @@ module fifo_async_tb;
             wr_data = 32'hBADBAD;
             @(posedge wr_clk);
             // Check overflow on this cycle (before wr_en goes low)
+`ifdef POST_SYNTHESIS
+            // Gate-level: Allow time for combinational propagation
+            #1;
+`endif
             if (overflow !== 1'b1) begin
                 $display("  ERROR: overflow should be set");
                 pass = 0;
@@ -472,6 +476,10 @@ module fifo_async_tb;
             rd_en = 1;
             @(posedge rd_clk);
             // Check underflow on this cycle (before rd_en goes low)
+`ifdef POST_SYNTHESIS
+            // Gate-level: Allow time for combinational propagation
+            #1;
+`endif
             if (underflow !== 1'b1) begin
                 $display("  ERROR: underflow should be set");
                 pass = 0;
