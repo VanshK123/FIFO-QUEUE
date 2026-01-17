@@ -1,0 +1,37 @@
+# Yosys Synthesis Script for Asynchronous FIFO
+# =============================================
+
+# Read design files
+read_verilog -sv ../rtl/fifo_pkg.vh
+read_verilog -sv ../rtl/synchronizer.v
+read_verilog -sv ../rtl/gray_counter.v
+read_verilog -sv ../rtl/fifo_async.v
+
+# Elaborate design hierarchy
+hierarchy -check -top fifo_async
+
+# High-level synthesis
+proc;       # Convert processes to netlists
+fsm;        # Optimize finite state machines
+opt;        # Generic optimizations
+memory;     # Optimize memory blocks
+opt;        # Clean up
+
+# Print statistics before technology mapping
+stat
+
+# Technology mapping for generic FPGA
+synth -top fifo_async
+
+# Detailed statistics after synthesis
+stat
+
+# Generate reports
+tee -o reports/fifo_async_synth.rpt stat
+tee -o reports/fifo_async_check.rpt check
+
+# Write synthesized netlist
+write_verilog -noattr netlists/fifo_async_synth.v
+
+# Write JSON for nextpnr (if doing place & route later)
+write_json netlists/fifo_async_synth.json

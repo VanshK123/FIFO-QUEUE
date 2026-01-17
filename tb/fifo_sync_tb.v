@@ -82,6 +82,11 @@ module fifo_sync_tb;
     //==========================================================================
     // DUT INSTANTIATION
     //==========================================================================
+`ifdef POST_SYNTHESIS
+    // Post-synthesis: parameters are synthesized away
+    fifo_sync dut (
+`else
+    // RTL simulation: use parameters
     fifo_sync #(
         .DATA_WIDTH         (DATA_WIDTH),
         .DEPTH              (DEPTH),
@@ -89,6 +94,7 @@ module fifo_sync_tb;
         .ALMOST_FULL_THRESH (ALMOST_FULL_THRESH),
         .ALMOST_EMPTY_THRESH(ALMOST_EMPTY_THRESH)
     ) dut (
+`endif
         .clk          (clk),
         .rst_n        (rst_n),
         .wr_en        (wr_en),

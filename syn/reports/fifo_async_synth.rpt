@@ -1,0 +1,68 @@
+14. Printing statistics.
+
+=== $paramod$2d1f5da734bda88c85121ae0bcafa174ce0747b6\synchronizer ===
+
+   Number of wires:                  6
+   Number of wire bits:             22
+   Number of public wires:           6
+   Number of public wire bits:      22
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                 10
+     $_DFF_PN0_                     10
+
+=== fifo_async ===
+
+   Number of wires:                683
+   Number of wire bits:           1482
+   Number of public wires:          56
+   Number of public wire bits:     762
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:               1266
+     $_ANDNOT_                      52
+     $_AND_                          9
+     $_DFFE_PN0P_                   50
+     $_DFFE_PP_                    512
+     $_DFF_PN0_                     14
+     $_DFF_PN1_                      2
+     $_MUX_                        486
+     $_NAND_                         4
+     $_NOR_                          5
+     $_NOT_                         28
+     $_ORNOT_                       12
+     $_OR_                          35
+     $_XNOR_                        17
+     $_XOR_                         38
+     $paramod$2d1f5da734bda88c85121ae0bcafa174ce0747b6\synchronizer      2
+
+=== design hierarchy ===
+
+   fifo_async                        1
+     $paramod$2d1f5da734bda88c85121ae0bcafa174ce0747b6\synchronizer      2
+
+   Number of wires:                695
+   Number of wire bits:           1526
+   Number of public wires:          68
+   Number of public wire bits:     806
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:               1284
+     $_ANDNOT_                      52
+     $_AND_                          9
+     $_DFFE_PN0P_                   50
+     $_DFFE_PP_                    512
+     $_DFF_PN0_                     34
+     $_DFF_PN1_                      2
+     $_MUX_                        486
+     $_NAND_                         4
+     $_NOR_                          5
+     $_NOT_                         28
+     $_ORNOT_                       12
+     $_OR_                          35
+     $_XNOR_                        17
+     $_XOR_                         38
+

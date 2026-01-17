@@ -85,12 +85,18 @@ module fifo_async_tb;
     //==========================================================================
     // DUT INSTANTIATION
     //==========================================================================
+`ifdef POST_SYNTHESIS
+    // Post-synthesis: parameters are synthesized away
+    fifo_async dut (
+`else
+    // RTL simulation: use parameters
     fifo_async #(
         .DATA_WIDTH  (DATA_WIDTH),
         .DEPTH       (DEPTH),
         .ADDR_WIDTH  (ADDR_WIDTH),
         .SYNC_STAGES (SYNC_STAGES)
     ) dut (
+`endif
         // Write interface
         .wr_clk       (wr_clk),
         .wr_rst_n     (wr_rst_n),
