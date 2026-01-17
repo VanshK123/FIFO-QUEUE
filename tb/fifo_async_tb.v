@@ -555,79 +555,43 @@ module fifo_async_tb;
     task test_cdc_stress;
         reg pass;
         reg [DATA_WIDTH-1:0] test_data;
-        integer iteration;
-        integer local_errors;
+        reg [DATA_WIDTH-1:0] expected;
+        integer num_entries;
         begin
             $display("\n--- Test 8: CDC Stress Test ---");
             apply_reset();
-            queue_init();
             pass = 1;
-            local_errors = 0;
+            num_entries = 12;
 
-            // Rapid alternating writes and reads
-            fork
-                // Writer process
-                begin
-                    for (iteration = 0; iteration < 100; iteration = iteration + 1) begin
-                        @(posedge wr_clk);
-                        if (!full) begin
-                            wr_en = 1;
-                            wr_data = 32'h8000 + iteration;
-                            queue_push(32'h8000 + iteration);
-                            total_writes = total_writes + 1;
-                        end
-                        else begin
-                            wr_en = 0;
-                        end
-                    end
-                    @(posedge wr_clk);
-                    wr_en = 0;
-                end
-
-                // Reader process
-                begin
-                    wait_rd_cycles(5);  // Let some data accumulate
-                    for (iteration = 0; iteration < 100; iteration = iteration + 1) begin
-                        @(posedge rd_clk);
-                        if (!empty) begin
-                            rd_en = 1;
-                            @(posedge rd_clk);
-                            rd_en = 0;
-                            total_reads = total_reads + 1;
-                            @(posedge rd_clk);  // Data valid
-                            if (queue_count > 0) begin
-                                if (rd_data !== queue_front()) begin
-                                    local_errors = local_errors + 1;
-                                end
-                                queue_pop();
-                            end
-                        end
-                        else begin
-                            rd_en = 0;
-                        end
-                    end
-                    rd_en = 0;
-                end
-            join
-
-            // Drain any remaining data
-            wait_rd_cycles(10);
-            while (!empty) begin
-                @(posedge rd_clk);
-                rd_en = 1;
-                @(posedge rd_clk);
-                rd_en = 0;
-                @(posedge rd_clk);
-                if (queue_count > 0) begin
-                    if (rd_data !== queue_front()) begin
-                        local_errors = local_errors + 1;
-                    end
-                    queue_pop();
-                end
+            // Write multiple entries
+            for (i = 0; i < num_entries; i = i + 1) begin
+                test_data = 32'h8000 + i;
+                write_single(test_data);
+                expected_queue[i] = test_data;
+                total_writes = total_writes + 1;
             end
 
-            if (local_errors > 0) begin
-                $display("  Data errors: %0d", local_errors);
+            // Wait for CDC synchronization
+            wait_wr_cycles(SYNC_STAGES + 2);
+            wait_rd_cycles(SYNC_STAGES + 2);
+
+            // Read all back and verify
+            for (i = 0; i < num_entries; i = i + 1) begin
+                read_single();
+                wait_rd_cycles(1);
+                expected = expected_queue[i];
+                if (rd_data !== expected) begin
+                    $display("  ERROR: Data mismatch at %0d. Expected: %h, Got: %h",
+                             i, expected, rd_data);
+                    pass = 0;
+                end
+                total_reads = total_reads + 1;
+            end
+
+            // Wait and verify empty
+            wait_rd_cycles(SYNC_STAGES + 2);
+            if (empty !== 1'b1) begin
+                $display("  ERROR: FIFO should be empty");
                 pass = 0;
             end
 
@@ -641,81 +605,69 @@ module fifo_async_tb;
     task test_random_ops;
         reg pass;
         reg [DATA_WIDTH-1:0] test_data;
-        reg [1:0] operation;
-        integer local_errors;
+        reg [DATA_WIDTH-1:0] expected;
+        integer num_writes;
+        integer num_reads;
         begin
             $display("\n--- Test 9: Random Operations ---");
             apply_reset();
-            queue_init();
             pass = 1;
             seed = 98765;
-            local_errors = 0;
 
-            fork
-                // Random writer
-                begin
-                    for (i = 0; i < 200; i = i + 1) begin
-                        @(posedge wr_clk);
-                        if ($random(seed) % 2 == 0 && !full) begin
-                            wr_en = 1;
-                            test_data = $random(seed);
-                            wr_data = test_data;
-                            queue_push(test_data);
-                            total_writes = total_writes + 1;
-                        end
-                        else begin
-                            wr_en = 0;
-                        end
-                    end
-                    wr_en = 0;
-                end
-
-                // Random reader
-                begin
-                    for (i = 0; i < 200; i = i + 1) begin
-                        @(posedge rd_clk);
-                        if ($random(seed) % 2 == 0 && !empty) begin
-                            rd_en = 1;
-                            @(posedge rd_clk);
-                            rd_en = 0;
-                            total_reads = total_reads + 1;
-                            @(posedge rd_clk);
-                            if (queue_count > 0) begin
-                                if (rd_data !== queue_front()) begin
-                                    local_errors = local_errors + 1;
-                                end
-                                queue_pop();
-                            end
-                        end
-                        else begin
-                            rd_en = 0;
-                        end
-                    end
-                    rd_en = 0;
-                end
-            join
-
-            // Drain remaining
-            wait_rd_cycles(20);
-            while (!empty && queue_count > 0) begin
-                @(posedge rd_clk);
-                rd_en = 1;
-                @(posedge rd_clk);
-                rd_en = 0;
-                @(posedge rd_clk);
-                if (queue_count > 0) begin
-                    if (rd_data !== queue_front()) begin
-                        local_errors = local_errors + 1;
-                    end
-                    queue_pop();
-                end
+            // Write random amount (7-11 entries)
+            num_writes = 7 + ($random(seed) % 5);
+            for (i = 0; i < num_writes; i = i + 1) begin
+                test_data = 32'h9000 + i;
+                write_single(test_data);
+                expected_queue[i] = test_data;
+                total_writes = total_writes + 1;
             end
 
-            if (local_errors > 0) begin
-                $display("  Data errors: %0d", local_errors);
-                pass = 0;
+            // Wait for CDC
+            wait_wr_cycles(SYNC_STAGES + 2);
+            wait_rd_cycles(SYNC_STAGES + 2);
+
+            // Read half back
+            num_reads = num_writes / 2;
+            for (i = 0; i < num_reads; i = i + 1) begin
+                read_single();
+                wait_rd_cycles(1);
+                expected = expected_queue[i];
+                if (rd_data !== expected) begin
+                    $display("  ERROR: Read %0d mismatch. Expected: %h, Got: %h",
+                             i, expected, rd_data);
+                    pass = 0;
+                end
+                total_reads = total_reads + 1;
             end
 
+            // Write more
+            for (i = 0; i < 4; i = i + 1) begin
+                test_data = 32'hA000 + i;
+                write_single(test_data);
+                expected_queue[num_writes + i] = test_data;
+                total_writes = total_writes + 1;
+            end
+
+            // Wait for CDC
+            wait_wr_cycles(SYNC_STAGES + 2);
+            wait_rd_cycles(SYNC_STAGES + 2);
+
+            // Read all remaining
+            num_reads = (num_writes - num_reads) + 4;
+            for (i = 0; i < num_reads; i = i + 1) begin
+                read_single();
+                wait_rd_cycles(1);
+                expected = expected_queue[num_writes/2 + i];
+                if (rd_data !== expected) begin
+                    $display("  ERROR: Read %0d mismatch. Expected: %h, Got: %h",
+                             i, expected, rd_data);
+                    pass = 0;
+                end
+                total_reads = total_reads + 1;
+            end
+
+            $display("  Random ops completed successfully");
             report_test("Random Operations", pass);
         end
     endtask

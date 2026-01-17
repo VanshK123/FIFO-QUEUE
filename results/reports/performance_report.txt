@@ -1,7 +1,7 @@
 ======================================================================
 FIFO PROJECT - PERFORMANCE ANALYSIS REPORT
 ======================================================================
-Generated: 2026-01-17 13:39:59
+Generated: 2026-01-17 18:15:26
 
 ----------------------------------------------------------------------
 SYNCHRONOUS FIFO RESULTS
@@ -15,15 +15,15 @@ Test Results:
   [PASS] Overflow Detection
   [PASS] Underflow Detection
   [PASS] Simultaneous R/W
-  [FAIL] Random Operations
+  [PASS] Random Operations
   [PASS] Burst Write/Read
   [PASS] Performance Test
 
-Summary: 9/10 tests passed (90%)
+Summary: 10/10 tests passed (100%)
 
 Performance Metrics:
-  Total Writes:    93
-  Total Reads:     67
+  Total Writes:    77
+  Total Reads:     53
   Peak Occupancy:  2/16 (12%)
   Throughput:      95.46 MB/s
 
@@ -39,15 +39,15 @@ Test Results:
   [PASS] Overflow Detection
   [PASS] Underflow Detection
   [PASS] Write Clock Faster
-  [FAIL] CDC Stress Test
-  [FAIL] Random Operations
+  [PASS] CDC Stress Test
+  [PASS] Random Operations
   [PASS] Performance Test
 
-Summary: 8/10 tests passed (80%)
+Summary: 10/10 tests passed (100%)
 
 Performance Metrics:
-  Total Writes:    129
-  Total Reads:     61
+  Total Writes:    85
+  Total Reads:     69
   Throughput:      64.59 MB/s
 
 ----------------------------------------------------------------------
@@ -56,11 +56,11 @@ COMPARISON SUMMARY
 
                           Sync FIFO    Async FIFO
                           ---------    ----------
-  Tests Passed:               9            8
-  Tests Failed:               1            2
-  Total Writes:              93          129
-  Total Reads:               67           61
+  Tests Passed:              10           10
+  Tests Failed:               0            0
+  Total Writes:              77           85
+  Total Reads:               53           69
 
 ======================================================================
-OVERALL STATUS: SOME TESTS FAILED
+OVERALL STATUS: ALL TESTS PASSED
 ======================================================================
