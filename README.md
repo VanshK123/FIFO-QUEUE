@@ -89,6 +89,12 @@ make sim_sync          # Post-synthesis verification
 - Post-synthesis verification (100% pass)
 - Ready for place & route
 
+**Documentation & Visualizations**
+- Complete technical documentation (600+ lines)
+- CDC architecture diagrams
+- Test results charts
+- Performance graphs (throughput, occupancy, transactions)
+
 ---
 
 ## Technical Overview
@@ -130,28 +136,7 @@ make sim_sync          # Post-synthesis verification
 
 The async FIFO solves the **metastability problem** when crossing clock domains:
 
-```
-Write Domain (100 MHz)          Read Domain (66.67 MHz)
-     |                                |
-     v                                v
-Write Pointer (Binary)          Read Pointer (Binary)
-     |                                |
-     v                                v
-Convert to Gray Code            Convert to Gray Code
-     |                                |
-     v                                v
-  wr_ptr_gray                     rd_ptr_gray
-     |                                |
-     |  ---- Synchronizer (2-FF) --> rd_ptr_gray_sync
-     |                                |
-     |                                v
-     |                          Compare for EMPTY
-     |
-     | <--- Synchronizer (2-FF) --- wr_ptr_gray_sync
-     |                                |
-     v                                v
-Compare for FULL                 Read Control
-```
+![CDC Architecture](results/reports/Clock%20Domain%20Crossing%20(CDC)%20Architecture.png)
 
 **Why Gray Code?**
 - Binary: `0011 → 0100` (3 bits change → glitches possible)
@@ -184,6 +169,8 @@ Where: T_r = resolution time, τ = FF time constant
 | **Synchronous** | 10/10 | 100% |
 | **Asynchronous** | 10/10 | 100% |
 | **TOTAL** | **20/20** | **100%** |
+
+![Test Results](results/reports/test_results.png)
 
 ### Synchronous FIFO Test Results
 
@@ -516,11 +503,12 @@ results/
 │   ├── fifo_sync.log              # Sync test log
 │   └── fifo_async.log             # Async test log
 └── reports/
-    ├── performance_report.txt     # Test summary
-    ├── test_results.png           # Pass/fail chart
-    ├── throughput_comparison.png  # Performance graph
-    ├── occupancy.png              # FIFO usage
-    └── transactions.png           # Read/write activity
+    ├── performance_report.txt            # Test summary
+    ├── Clock Domain Crossing (CDC) Architecture.png  # CDC diagram
+    ├── test_results.png                  # Pass/fail chart ✅
+    ├── throughput_comparison.png         # Performance comparison ✅
+    ├── occupancy.png                     # FIFO usage over time ✅
+    └── transactions.png                  # Read/write activity ✅
 
 syn/
 ├── netlists/
@@ -694,6 +682,17 @@ MTBF ≈ 10^145 seconds (practically infinite)
 - Sync is **47.7% faster** (95.46 vs 64.59 MB/s)
 - Async uses **6.4% more FPGA resources** (1,284 vs 1,207 cells)
 - Async provides **clock domain independence** (worth the overhead)
+
+### Performance Visualizations
+
+#### Throughput Comparison
+![Throughput Comparison](results/reports/throughput_comparison.png)
+
+#### FIFO Occupancy Over Time
+![Occupancy](results/reports/occupancy.png)
+
+#### Transaction Activity
+![Transactions](results/reports/transactions.png)
 
 ---
 
