@@ -505,10 +505,10 @@ results/
 └── reports/
     ├── performance_report.txt            # Test summary
     ├── Clock Domain Crossing (CDC) Architecture.png  # CDC diagram
-    ├── test_results.png                  # Pass/fail chart ✅
-    ├── throughput_comparison.png         # Performance comparison ✅
-    ├── occupancy.png                     # FIFO usage over time ✅
-    └── transactions.png                  # Read/write activity ✅
+    ├── test_results.png                  # Pass/fail chart
+    ├── throughput_comparison.png         # Performance comparison
+    ├── occupancy.png                     # FIFO usage over time
+    └── transactions.png                  # Read/write activity
 
 syn/
 ├── netlists/
